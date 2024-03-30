@@ -1,10 +1,10 @@
 ---
 layout: '@/templates/BasePost.astro'
-title: 5th Lorem ipsum dolor sit
-description: Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur vero esse non molestias eos excepturi.
-pubDate: 2020-02-05T00:00:00Z
+title: My first project with astro 4
+description: Im very excited with astro 4.
+pubDate: 2024-03-31T00:19:00Z
 imgSrc: '/assets/images/image-post2.jpeg'
-imgAlt: 'Image post 2'
+imgAlt: 'My first experience with astro 4'
 ---
 
-Full typography example at [this page](../sixth-post/).
+I'm very excited about this framework because it offers powerful SSR and CSR integrations, making it incredibly easy to use. We can integrate it with many libraries such as React.js, Vue.js, and others. While I've primarily focused on frontend features, I'm eager to explore integrating backend features in the future.

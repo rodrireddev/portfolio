@@ -1,11 +1,11 @@
 import { Section } from 'astro-boilerplate-components';
 
-import betterStackLogo from '../../public/assets/images/better-stack-white.png';
-import clerkLogo from '../../public/assets/images/clerk.png';
-import crowdinLogo from '../../public/assets/images/crowdin-white.png';
-import nextlessLogo from '../../public/assets/images/nextlessjs.png';
-import sentryLogo from '../../public/assets/images/sentry-white.png';
-import tursoLogo from '../../public/assets/images/turso.png';
+import bayerLogo from '../../public/assets/images/bayerLogo.svg';
+import heycreditoLogo from '../../public/assets/images/heycreditoLogo.webp';
+import percapitaLogo from '../../public/assets/images/percapitaLogo.png';
+import raussaLogo from '../../public/assets/images/raussaLogo.png';
+import reflektmeLogo from '../../public/assets/images/reflektmeLogo.svg';
+import socialeLogo from '../../public/assets/images/sociale_White_logo_v2.png';
 
 const Sponsors = () => (
   <Section title="Experience">
@@ -14,30 +14,43 @@ const Sponsors = () => (
         <tr className="h-56">
           <td className="border-2 border-gray-300 p-3">
             <a
-              href="https://sentry.io/for/nextjs/?utm_source=github&utm_medium=paid-community&utm_campaign=general-fy25q1-nextjs&utm_content=github-banner-nextjsboilerplate-logo"
+              href="https://sociale.com/"
               target="_blank"
+              aria-label="Sociale web"
             >
-              <img src={sentryLogo.src} alt="Sentry" width={260} height={224} />
-            </a>
-          </td>
-          <td className="border-2 border-gray-300 p-3">
-            <a
-              href="https://betterstack.com/?utm_source=github&utm_medium=sponsorship&utm_campaign=next-js-boilerplate"
-              target="_blank"
-            >
+              <span className="sr-only">Link to Sociale web</span>
               <img
-                src={betterStackLogo.src}
-                alt="Better Stack"
+                src={socialeLogo.src}
+                alt="Sociale"
                 width={260}
                 height={224}
               />
             </a>
           </td>
           <td className="border-2 border-gray-300 p-3">
-            <a href="https://nextlessjs.com">
+            <a
+              href="https://www.reflektme.com/"
+              target="_blank"
+              aria-label="Reflektme web"
+            >
+              <span className="sr-only">Link to Reflektme web</span>
               <img
-                src={nextlessLogo.src}
-                alt="React SaaS Boilerplate Next.js"
+                src={reflektmeLogo.src}
+                alt="Reflektme"
+                width={260}
+                height={224}
+              />
+            </a>
+          </td>
+          <td className="border-2 border-gray-300 p-3">
+            <a
+              href="https://play.google.com/store/apps/details?id=com.dialogo.raussa&hl=es_419&gl=US&pli=1"
+              aria-label="Download RAUSSA Diálogo Tecnológico, S.L. from Google Play"
+            >
+              <span className="sr-only">Link to Playstore web of RAUSSA</span>
+              <img
+                src={raussaLogo.src}
+                alt="RAUSSA Diálogo Tecnológico, S.L."
                 width={260}
                 height={224}
               />
@@ -47,12 +60,14 @@ const Sponsors = () => (
         <tr className="h-56">
           <td className="border-2 border-gray-300 p-3">
             <a
-              href="https://clerk.com?utm_source=github&utm_medium=sponsorship&utm_campaign=nextjs-boilerplate"
+              href="https://percapita.mx/"
               target="_blank"
+              aria-label="Visitar Percapita MX sitio web"
             >
+              <span className="sr-only">Link to Percapita</span>
               <img
-                src={clerkLogo.src}
-                alt="Clerk – Authentication & User Management for Next.js"
+                src={percapitaLogo.src}
+                alt="Percapita MX"
                 width={260}
                 height={224}
               />
@@ -60,25 +75,28 @@ const Sponsors = () => (
           </td>
           <td className="border-2 border-gray-300 p-3">
             <a
-              href="https://turso.tech/?utm_source=nextjsstarterbp"
+              href="https://heycreditos.com.ar/"
               target="_blank"
+              aria-label="Visitar Hey Créditos sitio web"
             >
+              <span className="sr-only">Link to Hey Créditos web</span>
               <img
-                src={tursoLogo.src}
-                alt="SQLite Developer Experience"
+                src={heycreditoLogo.src}
+                alt="Hey Créditos"
                 width={260}
                 height={224}
               />
             </a>
           </td>
           <td className="border-2 border-gray-300 p-3">
-            <a href="https://l.crowdin.com/next-js" target="_blank">
-              <img
-                src={crowdinLogo.src}
-                alt="Crowdin"
-                width={260}
-                height={224}
-              />
+            <a
+              href="https://www.agro.bayer.com.ar/"
+              target="_blank"
+              aria-label="Visitar Bayer sitio web"
+            >
+              <span className="sr-only">Link to Bayer web</span>
+
+              <img src={bayerLogo.src} alt="Bayer" width={260} height={224} />
             </a>
           </td>
         </tr>
