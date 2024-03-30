@@ -6,10 +6,8 @@ import {
   Section,
   Tags,
 } from 'astro-boilerplate-components';
-import type {
-  IFrontProjects,
-  Itag,
-} from 'astro-boilerplate-components/dist/esm/types/IFrontMatter';
+
+import type { IFrontProjects, Itag } from '@/types/Project';
 
 type IRecentProjectProps = {
   postList: MarkdownInstance<IFrontProjects>[];
