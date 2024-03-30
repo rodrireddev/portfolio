@@ -1,5 +1,4 @@
 import type { MarkdownInstance } from 'astro';
-import type { IFrontmatter } from 'astro-boilerplate-components';
 import {
   ColorTags,
   GradientText,
@@ -7,9 +6,10 @@ import {
   Section,
   Tags,
 } from 'astro-boilerplate-components';
+import type { IFrontProjects } from 'astro-boilerplate-components/dist/esm/types/IFrontMatter';
 
 type IRecentProjectProps = {
-  postList: MarkdownInstance<IFrontmatter>[];
+  postList: MarkdownInstance<IFrontProjects>[];
 };
 
 const RecentProjects = (props: IRecentProjectProps) => {
