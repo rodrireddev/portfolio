@@ -6,7 +6,10 @@ import {
   Section,
   Tags,
 } from 'astro-boilerplate-components';
-import type { IFrontProjects } from 'astro-boilerplate-components/dist/esm/types/IFrontMatter';
+import type {
+  IFrontProjects,
+  Itag,
+} from 'astro-boilerplate-components/dist/esm/types/IFrontMatter';
 
 type IRecentProjectProps = {
   postList: MarkdownInstance<IFrontProjects>[];
@@ -39,7 +42,7 @@ const RecentProjects = (props: IRecentProjectProps) => {
               }}
               category={
                 <>
-                  {item?.frontmatter?.tags?.map((itemTag: any) => {
+                  {item?.frontmatter?.tags?.map((itemTag: Itag) => {
                     return (
                       <Tags color={ColorTags.FUCHSIA}>{itemTag.tagName}</Tags>
                     );
