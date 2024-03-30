@@ -27,7 +27,7 @@ const RecentProjects = (props: IRecentProjectProps) => {
       }
     >
       <div className="flex flex-col gap-6">
-        {props?.postList.map((item) => {
+        {props?.postList.map((item: any) => {
           return (
             <Project
               name={item.frontmatter.title}
@@ -39,7 +39,7 @@ const RecentProjects = (props: IRecentProjectProps) => {
               }}
               category={
                 <>
-                  {item?.frontmatter?.tags?.map((itemTag) => {
+                  {item?.frontmatter?.tags?.map((itemTag: any) => {
                     return (
                       <Tags color={ColorTags.FUCHSIA}>{itemTag.tagName}</Tags>
                     );
