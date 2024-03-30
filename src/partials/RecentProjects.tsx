@@ -38,11 +38,14 @@ const RecentProjects = (props: IRecentProjectProps) => {
                 src: item.frontmatter.imgSrc,
                 alt: item.frontmatter.imgAlt,
               }}
+              key={item.frontmatter.title}
               category={
                 <>
                   {item?.frontmatter?.tags?.map((itemTag: Itag) => {
                     return (
-                      <Tags color={ColorTags.FUCHSIA}>{itemTag.tagName}</Tags>
+                      <Tags key={itemTag.tagName} color={ColorTags.FUCHSIA}>
+                        {itemTag.tagName}
+                      </Tags>
                     );
                   })}
                 </>
