@@ -1,4 +1,6 @@
 ---
+import { ViewTransitions } from 'astro:transitions';
+
 import { Footer } from '@/partials/Footer';
 import { Navbar } from '@/partials/Navbar';
 import { AppConfig } from '@/utils/AppConfig';
@@ -22,11 +24,12 @@ const {
     <title>{title}</title>
     <meta name='description' content={description} />
     <meta name='author' content={AppConfig.author} />
+    <ViewTransitions />
 
     <link rel='alternate' type='application/rss+xml' href='/rss.xml' />
     <link rel='icon' type='image/x-icon' href='/favicon.ico' />
   </head>
-  <body class='bg-slate-900 text-gray-100'>
+  <body class='bg-slate-900 text-gray-100' transition:animate='slide'>
     <Navbar />
 
     <slot></slot>
