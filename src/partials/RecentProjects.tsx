@@ -29,11 +29,12 @@ const RecentProjects = (props: IRecentProjectProps) => {
     >
       <div className="flex flex-col gap-6">
         {props?.postList.map((item: any) => {
+          console.log(item);
           return (
             <Project
               name={item.frontmatter.title}
               description={item.frontmatter.description}
-              link="/"
+              link={item.url}
               img={{
                 src: item.frontmatter.imgSrc,
                 alt: item.frontmatter.imgAlt,
