@@ -1,10 +1,10 @@
 ---
 layout: '@/templates/BasePost.astro'
-title: Gamification Project
-description: Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur vero esse non molestias eos excepturi.
-pubDate: 2020-02-05T00:00:00Z
-imgSrc: '/assets/images/image-post2.jpeg'
-imgAlt: 'Image post 2'
+title: Luna Game App
+description: Customize the character Luna and enjoy a funny music video.
+pubDate: 2024-04-01T00:00:00Z
+imgSrc: '/assets/images/Branding.svg'
+imgAlt: 'Luna world'
 ---
 
-Full typography example at [this page](../sixth-post/).
+The game consists of customizing a character named Luna. You can select many marks to insert on the character's face as a preview for rendering a video of this character with the selected marks.
