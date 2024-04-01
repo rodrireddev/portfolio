@@ -29,7 +29,6 @@ const RecentProjects = (props: IRecentProjectProps) => {
     >
       <div className="flex flex-col gap-6">
         {props?.postList.map((item: any) => {
-          console.log(item);
           return (
             <Project
               name={item.frontmatter.title}
