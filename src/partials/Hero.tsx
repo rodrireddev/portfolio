@@ -39,8 +39,8 @@ const Hero = () => (
       }
       avatar={
         <img
-          className="h-80 w-64"
-          src="/assets/images/avatar.svg"
+          className="h-64 w-64 rounded-sm"
+          src="/assets/images/avatar.png"
           alt="Avatar"
           loading="lazy"
         />
