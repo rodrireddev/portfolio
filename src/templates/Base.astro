@@ -29,11 +29,13 @@ const {
     <link rel='alternate' type='application/rss+xml' href='/rss.xml' />
     <link rel='icon' type='image/x-icon' href='/favicon.ico' />
   </head>
-  <body class='bg-slate-900 text-gray-100' transition:animate='slide'>
+  <body
+    class=' bg-black text-gray-100'
+    style='background-image: url(/assets/images/landing-background.png)'
+    transition:animate='slide'
+  >
     <Navbar />
-
     <slot></slot>
-
     <Footer />
   </body>
 </html>
