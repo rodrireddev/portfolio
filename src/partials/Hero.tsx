@@ -32,9 +32,7 @@ const Hero = () => (
           </a>
           set allows me to tackle a wide range of challenges, ensuring that
           every project I undertake meets the highest standards of performance,
-          usability, and innovation. malesuada nisi tellus, non imperdiet nisi
-          tempor at. Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-          sed do eiusmod tempor incididunt ut labore et dolore.
+          usability, and innovation.
         </>
       }
       avatar={
