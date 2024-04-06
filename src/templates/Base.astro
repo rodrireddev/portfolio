@@ -28,12 +28,19 @@ const {
 
     <link rel='alternate' type='application/rss+xml' href='/rss.xml' />
     <link rel='icon' type='image/x-icon' href='/favicon.ico' />
+    <style>
+      /* Estilo personalizado para el fondo de la imagen */
+      .bg-img {
+        background-image: url('/assets/images/landing-background.png'); /* Reemplaza 'ruta/de/tu/imagen.jpg' con la ruta de tu imagen */
+        background-size: cover; /* Ajusta el tamaño de la imagen para cubrir todo el cuerpo */
+        background-repeat: no-repeat; /* Evita que la imagen se repita */
+        background-position: center; /* Centra la imagen */
+      }
+    </style>
   </head>
-  <body class='bg-slate-900 text-gray-100' transition:animate='slide'>
+  <body class='bg-img bg-black text-gray-100' transition:animate='slide'>
     <Navbar />
-
     <slot></slot>
-
     <Footer />
   </body>
 </html>
