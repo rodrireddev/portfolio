@@ -1,7 +1,7 @@
 ---
 layout: '@/templates/BasePost.astro'
 title: Game JS
-description: A simple project with php
+description: A simple project with html and JS
 pubDate: 2024-06-04T00:19:00Z
 imgSrc: '/assets/images/game.png'
 imgAlt: 'Game with canvas'
