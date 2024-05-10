@@ -2,7 +2,7 @@
 layout: '@/templates/BasePost.astro'
 title: Captain Claw Js
 description: Trying a Game with html and js
-pubDate: 2024-09-04T00:19:00Z
+pubDate: 2024-04-09T00:19:00Z
 imgSrc: '/assets/images/preview_captain_claw.png'
 imgAlt: 'Game with canvas'
 ---
