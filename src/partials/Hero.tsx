@@ -57,7 +57,7 @@ const Hero = () => (
               alt="Facebook icon"
             />
           </a> */}
-          <a href="/">
+          <a href="https://www.linkedin.com/in/rodrigo-juan-angel-toledo/">
             <HeroSocial
               src="/assets/images/linkedin-icon.png"
               alt="Linkedin icon"
