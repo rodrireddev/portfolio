@@ -44,7 +44,7 @@ const Sponsors = () => (
           </td>
           <td className="border-2 border-gray-300 p-3">
             <a
-              href="https://play.google.com/store/apps/details?id=com.dialogo.raussa&hl=es_419&gl=US&pli=1"
+              href="https://play.google.com/store/apps/details?id=com.dialogotecnologico.raussa&hl=es_BO"
               aria-label="Download RAUSSA Diálogo Tecnológico, S.L. from Google Play"
             >
               <span className="sr-only">Link to Playstore web of RAUSSA</span>
