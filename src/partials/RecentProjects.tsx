@@ -7,7 +7,7 @@ import {
   Tags,
 } from 'astro-boilerplate-components';
 
-import type { IFrontProjects, Itag } from '@/types/Project';
+import type { IFrontProjects } from '@/types/Project';
 
 type IRecentProjectProps = {
   postList: MarkdownInstance<IFrontProjects>[];
@@ -41,10 +41,10 @@ const RecentProjects = (props: IRecentProjectProps) => {
               key={item.frontmatter.title}
               category={
                 <>
-                  {item?.frontmatter?.tags?.map((itemTag: Itag) => {
+                  {item?.frontmatter?.tags?.map((itemTag: string) => {
                     return (
-                      <Tags key={itemTag.tagName} color={ColorTags.FUCHSIA}>
-                        {itemTag.tagName}
+                      <Tags key={itemTag} color={ColorTags.AMBER}>
+                        {itemTag}
                       </Tags>
                     );
                   })}
