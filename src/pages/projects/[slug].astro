@@ -11,12 +11,27 @@ if (!project) Astro.response.status = 404;
 else Astro.response.headers.set('Cache-Control', 'public, s-maxage=30, stale-while-revalidate=300');
 
 const video = project ? youtubeId(project.youtubeUrl) : null;
+const site = Astro.site ?? new URL(Astro.url.origin);
+const jsonLd = project
+  ? [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'CreativeWork',
+        name: project.title,
+        description: project.summary,
+        url: new URL(`/projects/${project.slug}`, site).toString(),
+        keywords: project.tags.join(', '),
+        ...(project.images[0] && { image: new URL(project.images[0].url, site).toString() }),
+        ...(project.repoUrl && { codeRepository: project.repoUrl }),
+      },
+    ]
+  : [];
 const paragraphs = project?.description.split(/\n{2,}/).filter(Boolean) ?? [];
 ---
 
 {
   project ? (
-    <Base title={`${project.title} — Projects`} description={project.summary} image={project.images[0]?.url}>
+    <Base title={`${project.title} — Projects`} description={project.summary} image={project.images[0]?.url} jsonLd={jsonLd}>
       <div class="container">
         <header class="detail-head">
           <a class="back" href="/#projects">← All projects</a>
@@ -63,7 +78,7 @@ const paragraphs = project?.description.split(/\n{2,}/).filter(Boolean) ?? [];
       </div>
     </Base>
   ) : (
-    <Base title="Project not found">
+    <Base title="Project not found" noindex>
       <div class="container notfound">
         <h1>Project not found</h1>
         <p class="muted">It may have been moved or unpublished.</p>

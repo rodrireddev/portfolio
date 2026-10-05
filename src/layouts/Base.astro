@@ -8,10 +8,17 @@ interface Props {
   image?: string;
   /** Home only: smoke background + first-visit intro. */
   smoke?: boolean;
+  /** Keep the page out of search results. */
+  noindex?: boolean;
+  /** Structured data (JSON-LD) objects to embed. */
+  jsonLd?: Record<string, unknown>[];
 }
 const profile = await getProfile();
-const { title = profile.siteTitle, description = profile.siteDescription, image, smoke = false } = Astro.props;
-const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin);
+const { title = profile.siteTitle, description = profile.siteDescription, image, smoke = false, noindex = false, jsonLd = [] } = Astro.props;
+const siteUrl = Astro.site ?? new URL(Astro.url.origin);
+const canonical = new URL(Astro.url.pathname, siteUrl);
+const ogImage = new URL(image ?? '/og-image.png', siteUrl);
+const ld = jsonLd.map((o) => JSON.stringify(o).replace(/</g, '\u003c'));
 const initial = profile.name.trim().charAt(0).toLowerCase() || 'p';
 const home = Astro.url.pathname === '/' ? '' : '/';
 ---
@@ -27,11 +34,21 @@ const home = Astro.url.pathname === '/' ? '' : '/';
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="theme-color" content="#0a0c12" />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={profile.name} />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content={canonical} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    {image && <meta property="og:image" content={new URL(image, Astro.url.origin)} />}
-    <meta name="twitter:card" content={image ? 'summary_large_image' : 'summary'} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:alt" content={`${profile.name} — ${profile.role}`} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    {ld.map((json) => <script type="application/ld+json" is:inline set:html={json} />)}
     <script is:inline src="/init.js" data-intro={smoke ? '1' : undefined}></script>
   </head>
   <body>

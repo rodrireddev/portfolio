@@ -7,7 +7,12 @@ const IMAGE_SIZES = [320, 480, 640, 828, 1200, 1600];
 
 // Pages are rendered on demand so that content edited in the dashboard
 // (stored in Redis) shows up without a rebuild.
+// Public URL, used for canonical links, the sitemap and social previews.
+// Set SITE_URL in Vercel once you have a custom domain.
+const SITE = process.env.SITE_URL || 'https://portfolio-rodrigo-dev-nu.vercel.app';
+
 export default defineConfig({
+  site: SITE,
   output: 'server',
   adapter: vercel({
     imagesConfig: {
