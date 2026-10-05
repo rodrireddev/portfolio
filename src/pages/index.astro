@@ -10,7 +10,7 @@ const [profile, all] = await Promise.all([getProfile(), getProjects()]);
 const projects = all.filter((p) => p.visible).sort((a, b) => Number(b.featured) - Number(a.featured));
 const tags = [...new Set(projects.flatMap((p) => p.tags))].sort();
 const bio = profile.bio.split(/\n{2,}/).filter(Boolean);
-const siteKey = env('PUBLIC_TURNSTILE_SITE_KEY');
+const siteKey = env('TURNSTILE_SITE_KEY');
 
 // Public page: let the CDN serve it briefly while dashboard edits propagate.
 Astro.response.headers.set('Cache-Control', 'public, s-maxage=30, stale-while-revalidate=300');
