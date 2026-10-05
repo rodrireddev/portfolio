@@ -1,0 +1,38 @@
+---
+import '../../styles/global.css';
+import '../../styles/admin.css';
+import { SESSION_COOKIE, verifySession } from '../../lib/auth';
+import { usingRedis } from '../../lib/store';
+
+const authed = await verifySession(Astro.cookies.get(SESSION_COOKIE)?.value);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Dashboard</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <script is:inline src="/init.js"></script>
+  </head>
+  <body>
+    {
+      authed ? (
+        <div class="adm-wrap">
+          <div class="adm-title">
+            <h1>Portfolio dashboard</h1>
+            {!usingRedis && <span class="tag">Local file storage (no Redis configured)</span>}
+          </div>
+          <admin-app />
+        </div>
+      ) : (
+        <admin-login />
+      )
+    }
+    <script>
+      import '../../scripts/admin';
+    </script>
+  </body>
+</html>

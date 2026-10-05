@@ -1,0 +1,74 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getProjects } from '../../lib/store';
+import { youtubeId } from '../../lib/validate';
+import { optimized, srcset } from '../../lib/image';
+
+const { slug } = Astro.params;
+const project = (await getProjects()).find((p) => p.slug === slug && p.visible);
+
+if (!project) Astro.response.status = 404;
+else Astro.response.headers.set('Cache-Control', 'public, s-maxage=30, stale-while-revalidate=300');
+
+const video = project ? youtubeId(project.youtubeUrl) : null;
+const paragraphs = project?.description.split(/\n{2,}/).filter(Boolean) ?? [];
+---
+
+{
+  project ? (
+    <Base title={`${project.title} — Projects`} description={project.summary} image={project.images[0]?.url}>
+      <div class="container">
+        <header class="detail-head">
+          <a class="back" href="/#projects">← All projects</a>
+          <h1>{project.title}</h1>
+          <p class="lead">{project.summary}</p>
+          <dl class="facts">
+            <div><dt>Type</dt><dd>{project.kind === 'personal' ? 'Personal project' : 'Team project'}</dd></div>
+            {project.role && <div><dt>Role</dt><dd>{project.role}</dd></div>}
+            {project.year && <div><dt>Year</dt><dd>{project.year}</dd></div>}
+          </dl>
+        </header>
+
+        <div class="detail-body">
+          <div>
+            {video && <pf-youtube video-id={video} title={`${project.title} video`} />}
+            {
+              project.images.length > 0 && (
+                <pf-gallery>
+                  <div class="gallery-grid">
+                    {project.images.map((img) => (
+                      <button type="button" data-src={optimized(img.url, 1600)} data-alt={img.alt || project.title} aria-label={`Open image: ${img.alt || project.title}`}>
+                        <img src={optimized(img.url, 640)} srcset={srcset(img.url, [480, 828, 1200])} sizes="(max-width: 700px) 100vw, 640px" alt={img.alt || project.title} loading="lazy" decoding="async" />
+                      </button>
+                    ))}
+                  </div>
+                </pf-gallery>
+              )
+            }
+            <div class="prose">{paragraphs.map((p) => <p>{p}</p>)}</div>
+          </div>
+          <aside class="detail-side">
+            {project.tags.length > 0 && (
+              <>
+                <h2>Stack</h2>
+                <div class="chips">{project.tags.map((t) => <span class="tag">{t}</span>)}</div>
+              </>
+            )}
+            <div class="detail-actions">
+              {project.liveUrl && <a class="btn btn-primary" href={project.liveUrl} target="_blank" rel="noopener noreferrer">Live site ↗</a>}
+              {project.repoUrl && <a class="btn" href={project.repoUrl} target="_blank" rel="noopener noreferrer">Source code ↗</a>}
+            </div>
+          </aside>
+        </div>
+      </div>
+    </Base>
+  ) : (
+    <Base title="Project not found">
+      <div class="container notfound">
+        <h1>Project not found</h1>
+        <p class="muted">It may have been moved or unpublished.</p>
+        <p><a class="btn" href="/#projects">← Back to projects</a></p>
+      </div>
+    </Base>
+  )
+}

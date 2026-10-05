@@ -1,0 +1,140 @@
+---
+import Base from '../layouts/Base.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import Socials from '../components/Socials.astro';
+import { optimized } from '../lib/image';
+import { env } from '../lib/env';
+import { getProfile, getProjects } from '../lib/store';
+
+const [profile, all] = await Promise.all([getProfile(), getProjects()]);
+const projects = all.filter((p) => p.visible).sort((a, b) => Number(b.featured) - Number(a.featured));
+const tags = [...new Set(projects.flatMap((p) => p.tags))].sort();
+const bio = profile.bio.split(/\n{2,}/).filter(Boolean);
+const siteKey = env('PUBLIC_TURNSTILE_SITE_KEY');
+
+// Public page: let the CDN serve it briefly while dashboard edits propagate.
+Astro.response.headers.set('Cache-Control', 'public, s-maxage=30, stale-while-revalidate=300');
+---
+
+<Base smoke>
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        {profile.availability && <div class="pill"><i></i>{profile.availability}</div>}
+        <h1>Hi, I'm <span class="grad-text">{profile.name}</span></h1>
+        <p class="role">{profile.role}</p>
+        <p class="tagline">{profile.tagline}</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#projects">View my work</a>
+          <a class="btn" href="#contact">Get in touch</a>
+          {profile.resumeUrl && <a class="btn" href={profile.resumeUrl} target="_blank" rel="noopener">Résumé ↗</a>}
+        </div>
+        {profile.socials.length > 0 && <Socials socials={profile.socials} />}
+      </div>
+      {profile.avatarUrl && <img class="avatar" src={optimized(profile.avatarUrl, 480)} alt={profile.name} width="240" height="240" />}
+    </div>
+  </section>
+
+  <section class="section" id="about">
+    <div class="container about-grid">
+      <div>
+        <p class="eyebrow">About</p>
+        <h2 class="section-title">A bit about me</h2>
+        <div class="prose">{bio.map((p) => <p>{p}</p>)}</div>
+      </div>
+      <div>
+        <p class="eyebrow">Toolbox</p>
+        {
+          profile.skills.map((g) => (
+            <div class="skill-group">
+              <h3>{g.group}</h3>
+              <div class="chips">{g.items.map((i) => <span class="tag">{i}</span>)}</div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="projects">
+    <div class="container">
+      <p class="eyebrow">Selected work</p>
+      <h2 class="section-title">Projects</h2>
+      {
+        projects.length === 0 ? (
+          <p class="empty">Projects are coming soon.</p>
+        ) : (
+          <>
+            {tags.length > 1 && (
+              <pf-project-filter target="#project-grid">
+                <button class="chip-btn" type="button" data-tag="*" aria-pressed="true">All</button>
+                {tags.map((t) => <button class="chip-btn" type="button" data-tag={t} aria-pressed="false">{t}</button>)}
+              </pf-project-filter>
+            )}
+            <div class="project-grid" id="project-grid">
+              {projects.map((p) => <ProjectCard project={p} />)}
+            </div>
+          </>
+        )
+      }
+    </div>
+  </section>
+
+  {
+    profile.experience.length > 0 && (
+      <section class="section" id="experience">
+        <div class="container">
+          <p class="eyebrow">Career</p>
+          <h2 class="section-title">Experience</h2>
+          <div class="timeline">
+            {profile.experience.map((e) => (
+              <article>
+                <div class="period">{e.period}</div>
+                <h3>{[e.role, e.company].filter(Boolean).join(' · ')}</h3>
+                {e.description && <p>{e.description}</p>}
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <section class="section" id="contact">
+    <div class="container contact-grid">
+      <div>
+        <p class="eyebrow">Contact</p>
+        <h2 class="section-title">Let's work <span class="grad-text">together</span></h2>
+        <p class="muted">Have a project in mind or just want to say hi? Send a message and I'll reply as soon as I can.</p>
+        <ul class="contact-links">
+          {profile.email && <li><a href={`mailto:${profile.email}`}>{profile.email}</a></li>}
+          {profile.location && <li class="muted">{profile.location}</li>}
+                  </ul>
+        <Socials socials={profile.socials} />
+      </div>
+
+      <pf-contact-form site-key={siteKey} endpoint="/api/contact">
+        <form class="form" novalidate>
+          <div class="field">
+            <label for="c-name">Name</label>
+            <input id="c-name" name="name" autocomplete="name" required maxlength="100" />
+          </div>
+          <div class="field">
+            <label for="c-email">Email</label>
+            <input id="c-email" name="email" type="email" autocomplete="email" required maxlength="254" />
+          </div>
+          <div class="field">
+            <label for="c-msg">Message</label>
+            <textarea id="c-msg" name="message" required minlength="10" maxlength="4000"></textarea>
+          </div>
+          <div class="hp" aria-hidden="true">
+            <label>Website <input name="website" tabindex="-1" autocomplete="off" /></label>
+          </div>
+          <div class="captcha"></div>
+          <button class="btn btn-primary" type="submit">Send message</button>
+          <p class="form-status" role="status" aria-live="polite"></p>
+        </form>
+      </pf-contact-form>
+    </div>
+  </section>
+</Base>

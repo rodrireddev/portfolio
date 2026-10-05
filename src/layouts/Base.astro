@@ -1,0 +1,90 @@
+---
+import '../styles/global.css';
+import { getProfile } from '../lib/store';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  /** Home only: smoke background + first-visit intro. */
+  smoke?: boolean;
+}
+const profile = await getProfile();
+const { title = profile.siteTitle, description = profile.siteDescription, image, smoke = false } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin);
+const initial = profile.name.trim().charAt(0).toLowerCase() || 'p';
+const home = Astro.url.pathname === '/' ? '' : '/';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    {image && <meta property="og:image" content={new URL(image, Astro.url.origin)} />}
+    <meta name="twitter:card" content={image ? 'summary_large_image' : 'summary'} />
+    <script is:inline src="/init.js" data-intro={smoke ? '1' : undefined}></script>
+  </head>
+  <body>
+    {
+      smoke && (
+        <>
+          <pf-smoke aria-hidden="true" />
+          <div class="intro-splash" aria-hidden="true">
+            <div class="intro-name">
+              <span>{profile.name}</span>
+              <small>{profile.role}</small>
+            </div>
+            <span class="intro-skip">Tap to skip</span>
+          </div>
+        </>
+      )
+    }
+    <pf-cursor aria-hidden="true"></pf-cursor>
+    <pf-nav>
+      <header class="site-header">
+        <div class="container nav">
+          <a class="logo" href="/" aria-label="Home"><span>&lt;</span>{initial}<span>/&gt;</span></a>
+          <nav class="nav-links" aria-label="Main">
+            <a href={`${home}#about`}>About</a>
+            <a href={`${home}#projects`}>Projects</a>
+            <a href={`${home}#experience`}>Experience</a>
+            <a href={`${home}#contact`} class="btn btn-primary">Contact</a>
+          </nav>
+          <div class="nav-actions">
+            <pf-theme-toggle>
+              <button class="icon-btn" type="button" aria-label="Toggle theme">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+              </button>
+            </pf-theme-toggle>
+            <button class="icon-btn menu-btn" type="button" data-menu aria-label="Menu" aria-expanded="false">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+            </button>
+          </div>
+        </div>
+      </header>
+    </pf-nav>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <span>© {new Date().getFullYear()} {profile.name}</span>
+        <span>Built with Astro · Web Components · TypeScript</span>
+      </div>
+    </footer>
+    <script>
+      import '../scripts/public';
+      import '../scripts/smoke';
+    </script>
+  </body>
+</html>
